@@ -8,7 +8,7 @@ export class FileDownloader {
     async download(request: DownloadRequest): Promise<string> {
         const writeStream = createWriteStream(request.destination);
         await new Promise((resolve, reject) => {
-            get(request.url, res => {
+            get(request.url.toString(), res => {
                 const stream = res.pipe(writeStream);
                 writeStream.on("finish", resolve);
                 stream.on("error", reject);

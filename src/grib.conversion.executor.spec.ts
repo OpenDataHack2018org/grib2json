@@ -2,7 +2,7 @@ import {should, use} from "chai";
 import * as chaiAsPromised from "chai-as-promised";
 import {GribConversionExecutor} from "./grib.conversion.executor";
 import {environment} from "../environment";
-import {basename, dirname, extname, resolve as resolvePath} from "path";
+import {resolve as resolvePath} from "path";
 import {statSync} from "fs";
 import {NodeReadable, Stream} from "ts-stream";
 import {createLogger, format, transports} from "winston";
