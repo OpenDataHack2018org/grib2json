@@ -19,8 +19,16 @@ const s3 = new S3({region});
 const version = require("../package.json").version;
 const uploader = new Uploader(s3, bucket, `${version}/`);
 const converter = new GribConverter(downloader, executor, pathResolver, uploader);
+const originHeaders = {"Access-Control-Allow-Origin": "*"};
 export const handler: Handler<APIGatewayEvent, any> = async (event, context) => {
-    const url = event.queryStringParameters["url"] || JSON.parse(event.body).url;
+    const url = event.queryStringParameters.url || JSON.parse(event.body).url;
     const link = await converter.handle({url});
+    return {
+        statusCode: 200,
+        body: JSON.stringify({link}),
+        headers: {
+            "Content-Type": "application/json",
+            ...originHeaders
+        }
 
 };

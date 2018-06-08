@@ -26,6 +26,8 @@ plugins:
 custom:
   gribBucket: converted-gribs
   region: eu-west-1
+  memorySize: 2048
+  timeout: 300
   webpack:
     webpackConfig: 'webpack.config.ts'
 
