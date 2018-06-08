@@ -30,5 +30,6 @@ export const handler: Handler<APIGatewayEvent, any> = async (event, context) => 
             "Content-Type": "application/json",
             ...originHeaders
         }
+    };
 
 };
