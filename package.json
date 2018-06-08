@@ -4,7 +4,8 @@
   "description": "ecCodes in Lambda",
   "main": "index.js",
   "scripts": {
-    "test": "mocha **/*.spec.ts"
+    "test": "mocha **/*.spec.ts",
+    "lint": "tslint **/*.ts"
   },
   "author": "Daniel Jabry <djabry@gmail.com>",
   "license": "MIT",
@@ -15,7 +16,6 @@
     "@types/node": "10.3.2",
     "chai": "4.1.2",
     "chai-as-promised": "7.1.1",
-    "got": "^8.3.1",
     "mocha": "5.2.0",
     "serverless": "1.27.3",
     "ts-node": "6.1.0",
