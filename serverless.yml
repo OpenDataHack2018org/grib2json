@@ -39,7 +39,7 @@ resources:
         BucketName: ${self:custom.gribBucket}
 
 functions:
-  create:
+  converter:
     handler: functions/converter.handler
     events:
       - http:
