@@ -67,3 +67,4 @@ typings/
 **/*.js.map
 **/*.d.ts
 eccodes
+.serverless

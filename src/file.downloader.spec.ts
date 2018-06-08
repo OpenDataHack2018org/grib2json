@@ -6,11 +6,13 @@ import {tmpdir} from "os";
 import {resolve as resolvePath} from "path";
 import {AddressInfo} from "net";
 import {readFileSync, unlinkSync} from "fs";
+import {RandomUtils} from "./random.utils";
 let instance: FileDownloader;
 let mockFileContent: string;
 let destination: string;
 let server: Server;
 let serverAddress: string;
+const randomUtils = new RandomUtils();
 describe("File downloader", function() {
     this.timeout(1e4);
 
@@ -40,10 +42,12 @@ describe("File downloader", function() {
     });
 
     it("Downloads a file from an existing URL", async () => {
-        await instance.download({
+        const hash = await instance.download({
             destination,
             url: new URL(serverAddress)
         });
+
+        hash.should.equal(randomUtils.hash(mockFileContent), "Should have calculated the hash of the file contents");
         readFileSync(destination).toString().should.equal(mockFileContent,
             "Should have downloaded the correct file contents");
     });

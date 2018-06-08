@@ -1,0 +1,25 @@
+service: grib2json
+
+frameworkVersion: ">=1.1.0 <2.0.0"
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  environment:
+    REGION: eu-west-1
+
+plugins:
+  - serverless-webpack
+
+custom:
+  webpack:
+    webpackConfig: 'webpack.config.ts'
+
+functions:
+  create:
+    handler: functions/converter.handler
+    events:
+      - http:
+          path: convert
+          method: post
+          cors: true

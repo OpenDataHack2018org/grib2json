@@ -3,8 +3,6 @@ import * as chaiAsPromised from "chai-as-promised";
 import {GribConversionExecutor} from "./grib.conversion.executor";
 import {environment} from "../environment";
 import {resolve as resolvePath} from "path";
-import {statSync} from "fs";
-import {NodeReadable, Stream} from "ts-stream";
 import {createLogger, format, transports} from "winston";
 import {PassThrough} from "stream";
 const testPath = resolvePath(__dirname, "..", "test");
@@ -13,7 +11,7 @@ const logger = createLogger({
     transports: [new transports.Console()]
 });
 let instance: GribConversionExecutor;
-describe("Grib converter", function() {
+describe("Grib GribConverter", function() {
     this.timeout(6e5);
 
     before("Initialise chai", () => {
@@ -23,21 +21,6 @@ describe("Grib converter", function() {
 
     beforeEach("Create instance", () => {
         instance = new GribConversionExecutor(environment.binFilePath);
-        try {
-            statSync(environment.binFilePath);
-        } catch (err) {
-
-            if (err.code === "ENOENT") {
-                logger.error(`No grib executable found in ${environment.binFilePath}, using mock data`);
-                logger.error("Please run the test in the docker container");
-                instance.convertToJson = () => {
-                    return new NodeReadable(Stream.from([JSON.stringify({foo: "bar"})]));
-                };
-            } else {
-                throw err;
-            }
-        }
-
     });
 
     it("Converts a sample file", async () => {

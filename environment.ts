@@ -1,4 +1,8 @@
 import {resolve as resolvePath} from "path";
+const eccodesFolder = "eccodes";
+const eccodesDistFolderPath = resolvePath(__dirname, eccodesFolder, "dist");
 export const environment = {
-    binFilePath: resolvePath(__dirname, "eccodes", "dist", "bin", "grib_dump")
+    eccodesFolder,
+    binFilePath: resolvePath(eccodesDistFolderPath, "bin", "grib_dump"),
+    eccodesDistFolderPath
 };
