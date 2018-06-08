@@ -44,7 +44,7 @@ describe("File downloader", function() {
     it("Downloads a file from an existing URL", async () => {
         const hash = await instance.download({
             destination,
-            url: new URL(serverAddress)
+            url: serverAddress
         });
 
         hash.should.equal(randomUtils.hash(mockFileContent), "Should have calculated the hash of the file contents");

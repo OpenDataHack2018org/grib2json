@@ -14,15 +14,21 @@ export class GribConverter {
 
     async handle(request: ConvertRequest): Promise<string> {
         const destination = this.pathResolver.randomDownloadPath();
-        const hash = await this.downloader.download({url: new URL(request.url), destination});
-        const destinationKey = this.pathResolver.toDestinationKey(hash);
-        const exists = await this.uploader.exists(destinationKey);
-        if (!exists) {
-            const readable =  this.converter.convertToJson(destination);
-            await this.uploader.upload(readable, destinationKey);
+        try {
+            const hash = await this.downloader.download({url: request.url, destination});
+            const destinationKey = this.pathResolver.toDestinationKey(hash);
+            const exists = await this.uploader.exists(destinationKey);
+            if (!exists) {
+                const readable =  this.converter.convertToJson(destination);
+                await this.uploader.upload(readable, destinationKey);
+            }
+            unlinkSync(destination);
+            return await this.uploader.getLink(destinationKey);
+        } catch (err) {
+            // Attempt to clean up the local file if something goes wrong
+            unlinkSync(destination);
+            throw err;
         }
-        unlinkSync(destination);
-        return await this.uploader.getLink(destinationKey);
 
     }
 }

@@ -6,7 +6,11 @@
   "scripts": {
     "test": "mocha **/*.spec.ts",
     "lint": "tslint **/*.ts",
-    "build": "sls package"
+    "deploy:dev": "sls package --stage=dev",
+    "deploy:prod": "sls deploy --stage=prod",
+    "docker-build": "docker build . -t grib2json",
+    "docker-test": "npm run docker-build && docker run --rm grib2json npm run test",
+    "docker-deploy:prod": "npm run docker-test && docker run --rm -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY grib2json npm run deploy:prod"
   },
   "author": "Daniel Jabry <djabry@gmail.com>",
   "license": "MIT",
@@ -24,6 +28,7 @@
     "mime": "2.3.1",
     "mocha": "5.2.0",
     "serverless": "1.27.3",
+    "serverless-pseudo-parameters": "1.6.0",
     "serverless-webpack": "5.1.5",
     "source-map-support": "0.5.6",
     "transform-loader": "0.2.4",

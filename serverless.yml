@@ -5,15 +5,36 @@ frameworkVersion: ">=1.1.0 <2.0.0"
 provider:
   name: aws
   runtime: nodejs8.10
+  region: ${self:custom.region}
+  iamRoleStatements:
+    -  Effect: "Allow"
+       Action:
+         - "s3:ListBucket"
+         - "s3:HeadObject"
+         - "s3:PutObject"
+         - "s3:GetObject"
+       Resource:
+         - "arn:aws:s3:::${self:custom.gribBucket}"
+         - "arn:aws:s3:::${self:custom.gribBucket}/*"
   environment:
-    REGION: eu-west-1
+    REGION: ${self:custom.region}
+    GRIB_BUCKET: ${self:custom.gribBucket}
 
 plugins:
   - serverless-webpack
 
 custom:
+  gribBucket: converted-gribs
+  region: eu-west-1
   webpack:
     webpackConfig: 'webpack.config.ts'
+
+resources:
+  Resources:
+    GribBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: ${self:custom.gribBucket}
 
 functions:
   create:
@@ -22,4 +43,8 @@ functions:
       - http:
           path: convert
           method: post
+          cors: true
+      - http:
+          path: convert
+          method: get
           cors: true

@@ -6,4 +6,5 @@ RUN ./build_eccodes.sh
 COPY package.json .
 RUN npm install
 ADD . .
-CMD ["npm", "run", "test"]
+WORKDIR /var/task
+CMD npm run test

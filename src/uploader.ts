@@ -1,5 +1,5 @@
 import * as S3 from "aws-sdk/clients/s3";
-import {Readable} from "stream";
+import {PassThrough, Readable} from "stream";
 
 export class Uploader {
     constructor(private s3: S3,
@@ -39,8 +39,11 @@ export class Uploader {
 
     async upload(stream: Readable, destinationKey: string): Promise<void> {
         const params = this.toParams(destinationKey);
+        const passThrough = new PassThrough();
+        const body = stream.pipe(passThrough);
         await this.s3.upload({
             ...params,
+            Body: body,
             ContentType: "application/json" // Resolve this from the destination key in future
         }).promise();
     }

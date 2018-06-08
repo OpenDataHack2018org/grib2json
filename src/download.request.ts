@@ -1,4 +1,4 @@
 export interface DownloadRequest {
-    url: URL;
+    url: string;
     destination: string;
 }

@@ -13,7 +13,7 @@ const randomUtils = new RandomUtils();
 const pathResolver = new PathResolver(randomUtils);
 const executor = new GribConversionExecutor(environment.binFilePath);
 const region = process.env.REGION;
-const bucket = process.env.PROCESS_BUCKET;
+const bucket = process.env.GRIB_BUCKET;
 const s3 = new S3({region});
 // tslint:disable-next-line
 const version = require("../package.json").version;
