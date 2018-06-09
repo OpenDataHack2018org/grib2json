@@ -63,3 +63,5 @@ typings/
 .next
 eccodes
 .git
+.serverless
+.webpack
