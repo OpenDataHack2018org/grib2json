@@ -22,6 +22,7 @@ provider:
 
 plugins:
   - serverless-webpack
+  - serverless-offline
 
 custom:
   gribBucket: converted-gribs
