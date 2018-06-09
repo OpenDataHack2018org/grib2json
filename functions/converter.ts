@@ -5,16 +5,18 @@ import {FileDownloader} from "../src/file.downloader";
 import {PathResolver} from "../src/path.resolver";
 import {RandomUtils} from "../src/random.utils";
 import {GribConversionExecutor} from "../src/grib.conversion.executor";
-import {environment} from "../environment";
 import {Uploader} from "../src/uploader";
 import * as S3 from "aws-sdk/clients/s3";
+
+const region = process.env.REGION;
+const bucket = process.env.GRIB_BUCKET;
+const binFilePath = process.env.BIN_FILE_PATH;
+const s3 = new S3({region});
+
 const downloader = new FileDownloader();
 const randomUtils = new RandomUtils();
 const pathResolver = new PathResolver(randomUtils);
-const executor = new GribConversionExecutor(environment.binFilePath);
-const region = process.env.REGION;
-const bucket = process.env.GRIB_BUCKET;
-const s3 = new S3({region});
+const executor = new GribConversionExecutor(binFilePath);
 // tslint:disable-next-line
 const version = require("../package.json").version;
 const uploader = new Uploader(s3, bucket, `${version}/`);

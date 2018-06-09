@@ -19,6 +19,7 @@ provider:
   environment:
     REGION: ${self:custom.region}
     GRIB_BUCKET: ${self:custom.gribBucket}
+    BIN_FILE_PATH: /var/task/eccodes/dist/bin/grib_dump
 
 plugins:
   - serverless-webpack

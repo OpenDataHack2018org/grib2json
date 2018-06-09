@@ -11,7 +11,7 @@ const logger = createLogger({
     transports: [new transports.Console()]
 });
 let instance: GribConversionExecutor;
-describe("Grib GribConverter", function() {
+describe("Grib Converter", function() {
     this.timeout(6e5);
 
     before("Initialise chai", () => {
