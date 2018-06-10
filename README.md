@@ -1,6 +1,6 @@
 # GRIB to JSON converter
 
-This project makes use of AWS Lambda and API Gateway to convert GRIB files to JSON
+This project makes use of AWS Lambda and API Gateway to convert GRIB files to JSON in order to make CDS data accessible from the browser
 
 ## How to use it:
 
